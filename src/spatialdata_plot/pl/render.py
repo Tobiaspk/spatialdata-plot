@@ -442,6 +442,11 @@ def _render_points(
     if col_for_color is not None:
         cols = sc.get.obs_df(adata, col_for_color)
         # maybe set color based on type
+
+        # support scanpy 1.10+
+        if isinstance(cols, pd.DataFrame):
+            cols = cols[col_for_color]
+
         if isinstance(cols.dtype, pd.CategoricalDtype):
             _maybe_set_colors(
                 source=adata,
